@@ -1,0 +1,17 @@
+{
+  "name": "course-management-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "encoding": "utf8",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "readline": "^1.3.0",
+    "readline-sync": "^1.4.10"
+  }
+}
