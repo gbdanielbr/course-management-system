@@ -10,7 +10,8 @@
         "link 1",
         "link 2"
       ],
-      "date": ""
+      "createdAt": "",
+      "modifiedAt": ""
     },
     {
       "id": 2,
@@ -22,7 +23,8 @@
         "link 1",
         "link 2"
       ],
-      "date": ""
+      "createdAt": "",
+      "modifiedAt": ""
     }
   ]
 }
