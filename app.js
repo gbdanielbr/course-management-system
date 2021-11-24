@@ -1,7 +1,9 @@
 const readline = require('readline-sync')
-const { courses } = require('./database')
+const database = require('./database')
 
-/*============ Função para criar um curso ============*/
+let courses = database.courses
+
+/*===================== criar um curso =====================*/
 function createCourse() {
   const newCourse = {
     id: 0,
@@ -9,7 +11,7 @@ function createCourse() {
     description: "",
     image: "",
     teacher: "",
-    classList: [],
+    classesList: [],
     createdAt: null,
     modifiedAt: null
   }
@@ -31,7 +33,7 @@ function createCourse() {
   const classQuantity = readline.question("\nQuantidade de aulas: ")
   for (let i = 0; i < classQuantity; i++){
     console.log(`\nLink da aula ${i+1}: `)
-    newCourse.classList.push(readline.question())
+    newCourse.classesList.push(readline.question())
   }
 
   // Armazenar data da criação do curso
@@ -39,9 +41,12 @@ function createCourse() {
 
   // Enviar o novo curso para o banco de dados
   courses.push(newCourse)
+  console.log(courses)
+
+  againQuestion()
 }
 
-/*============ Função para mostrar um curso específico ============*/
+/*============== mostrar um curso específico ================*/
 function showCourse() {
   const courseId = readline.question("\nQual o ID do curso desejado? ")
 
@@ -63,18 +68,72 @@ function showCourse() {
   }
 }
 
-/*============ Função para atualizar um curso ============*/
-// function updateCourse() {
-// }
-
-/*============ Função para deletar um curso ============*/
-function deleteCourse() {
+/*===================  atualizar um curso ===================*/
+function updateCourse() {
   const courseId = readline.question("\nQual o ID do curso desejado? ")
-  courses.filter(item => item.id == courseId)
-  console.log(courses)
+
+  // Verificar se o ID digitado não é um número
+  if (isNaN(courseId)){
+    console.log("ERRO: o ID digitado precisa ser um número")
+    showCourse()
+  } else {
+    // Comparar o ID fornecido pelo usuário com os IDs disponíveis no banco de dados
+    const course = courses.find(item => item.id == courseId)
+    const courseIndex = courses.findIndex(item => item.id == courseId)
+
+    // Verificar se foi encontrado o ID digitado
+    if (course == undefined){
+      console.log("ERRO: não existe um curso com este ID")
+      againQuestion()
+    } else {
+      // Armazenar dados de entrada para edição do curso
+      console.log("\nDigite as seguintes informações:")
+      console.log("\nTítulo: ")
+      course.title = readline.question()
+      console.log("\nDescrição: ")
+      course.description = readline.question()
+      console.log("\nCaminho da imagem: ")
+      course.image = readline.question()
+      console.log("\nNome do professor: ")
+      course.teacher = readline.question()
+        
+      const classQuantity = readline.question("\nQuantidade de aulas: ")
+      for (let i = 0; i < classQuantity; i++){
+        console.log(`\nLink da aula ${i+1}: `)
+        course.classesList[i] = readline.question()
+      }
+
+      // Armazenar data da criação do curso
+      course.updatedAt = new Date()
+
+      courses[courseIndex] = course
+      againQuestion()
+    }
+  }
+
 }
 
-/*============ Função para executar a aplicação ============*/
+/*==================== deletar um curso ====================*/
+function deleteCourse() {
+  const courseId = readline.question("\nQual o ID do curso desejado? ")
+
+  // Comparar o ID fornecido pelo usuário com os IDs disponíveis no banco de dados
+  const course = courses.find(item => item.id == courseId)
+  // Verificar se foi encontrado o ID digitado
+  if (course == undefined){
+    console.log("ERRO: não existe um curso com este ID")
+    againQuestion()
+  } else {
+    const newCourses = courses.filter(item => item.id != courseId)
+    courses = newCourses
+    console.log(`\nCurso ID ${courseId} deletado!`)
+    console.log(courses)
+    againQuestion()
+  }
+
+}
+
+/*================== executar a aplicação ==================*/
 function app() {
 
   const optionsList = [
@@ -93,18 +152,19 @@ function app() {
   // Lógica após a escolha do usuário
   if (userOption == 0){
     console.table(courses)
+    againQuestion()
   } else if (userOption == 1){
     createCourse()
   } else if (userOption == 2){
     showCourse()
   } else if (userOption == 3){
-    return
+    updateCourse()
   } else if (userOption == 4){
     deleteCourse()
   }
 }
 
-/*====== Função para perguntar se o usuário deseja executar novamente ======*/
+/*================= executar novamente ? ===================*/
 function againQuestion() {
   console.log("\nDeseja executar novamente?")
   const answer = readline.question("Digite 'S' ou 'N'")
