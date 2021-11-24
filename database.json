@@ -1,0 +1,28 @@
+{
+  "courses": [
+    {
+      "id": 1,
+      "title": "title 1",
+      "description": "description 1",
+      "image": "path 1",
+      "teacher": "name surname 1",
+      "classList": [
+        "link 1",
+        "link 2"
+      ],
+      "date": ""
+    },
+    {
+      "id": 2,
+      "title": "title 2",
+      "description": "description 2",
+      "image": "path 2",
+      "teacher": "name surname 2",
+      "classList": [
+        "link 1",
+        "link 2"
+      ],
+      "date": ""
+    }
+  ]
+}
