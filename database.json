@@ -1,43 +1,38 @@
-{
-  "courses": [
-    {
-      "id": 1,
-      "title": "title 1",
-      "description": "description 1",
-      "image": "path 1",
-      "teacher": "name surname 1",
-      "classesList": [
-        "link 1",
-        "link 2"
-      ],
-      "createdAt": "",
-      "updatedAt": ""
-    },
-    {
-      "id": 2,
-      "title": "title 2",
-      "description": "description 2",
-      "image": "path 2",
-      "teacher": "name surname 2",
-      "classesList": [
-        "link 1",
-        "link 2"
-      ],
-      "createdAt": "",
-      "updatedAt": ""
-    },
-    {
-    "id": 3,
-    "title": "title 3",
-    "description": "description 3",
-    "image": "path 3",
-    "teacher": "name surname 3",
+[
+  {
+    "id": 1,
+    "title": "test",
+    "description": "test",
+    "image": "test",
+    "teacher": "test",
     "classesList": [
-      "link 1",
-      "link 2"
+      "test"
     ],
-    "createdAt": "",
-    "updatedAt": ""
-    }
-  ]
-}
+    "createdAt": "2021-11-25T18:29:34.410Z",
+    "updatedAt": null
+  },
+  {
+    "id": 2,
+    "title": "test 2",
+    "description": "test",
+    "image": "test",
+    "teacher": "test",
+    "classesList": [],
+    "createdAt": "2021-11-25T17:57:20.511Z",
+    "updatedAt": "2021-11-25T18:30:40.056Z"
+  },
+  {
+    "id": 3,
+    "title": "test 3",
+    "description": "test",
+    "image": "test",
+    "teacher": "test",
+    "classesList": [
+      "test",
+      "test",
+      "test"
+    ],
+    "createdAt": "2021-11-25T18:30:09.821Z",
+    "updatedAt": null
+  }
+]
