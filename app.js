@@ -45,7 +45,7 @@ function createCourse() {
   let classQuantity = readline.question('\nQuantidade de aulas: ')
   if (isNaN(classQuantity)) {
     while (isNaN(classQuantity)) {
-      console.log('ERRO: a quantidade digitada precisa ser um número')
+      console.error('ERRO: a quantidade digitada precisa ser um número')
       classQuantity = readline.question('\nQuantidade de aulas: ')
     }
   }
@@ -73,17 +73,17 @@ function showCourse() {
 
   // Verificar se o ID digitado não é um número
   if (isNaN(courseId)) {
-    console.log('\nERRO: o ID digitado precisa ser um número')
+    console.error('\nERRO: o ID digitado precisa ser um número')
     showCourse()
   } else {
     // Comparar o ID fornecido pelo usuário com os IDs disponíveis no banco de dados
     const course = courses.find(item => item.id == courseId)
     // Verificar se foi encontrado o ID digitado
     if (course == undefined) {
-      console.log(`\nERRO: não existe um curso com o ID ${courseId}`)
+      console.warn(`\nERRO: não existe um curso com o ID ${courseId}`)
       againQuestion()
     } else {
-      console.table([course])
+      console.log([course])
       againQuestion()
     }
   }
@@ -95,7 +95,7 @@ function updateCourse() {
 
   // Verificar se o ID digitado não é um número
   if (isNaN(courseId)) {
-    console.log('ERRO: o ID digitado precisa ser um número')
+    console.error('ERRO: o ID digitado precisa ser um número')
     showCourse()
   } else {
     // Comparar o ID fornecido pelo usuário com os IDs disponíveis no banco de dados
@@ -104,7 +104,7 @@ function updateCourse() {
 
     // Verificar se foi encontrado o ID digitado
     if (course == undefined) {
-      console.log(`\nERRO: não existe um curso com o ID ${courseId}`)
+      console.warn(`\nERRO: não existe um curso com o ID ${courseId}`)
       againQuestion()
     } else {
       // Armazenar dados de entrada para edição do curso
@@ -138,7 +138,7 @@ function updateCourse() {
           let classQuantity = readline.question('\nQuantidade de aulas: ')
           if (isNaN(classQuantity)) {
             while (isNaN(classQuantity)) {
-              console.log('\nERRO: a quantidade digitada precisa ser um número')
+              console.error('\nERRO: a quantidade digitada precisa ser um número')
               classQuantity = readline.question('Quantidade de aulas: ')
             }
           }
@@ -170,7 +170,7 @@ function deleteCourse() {
   const course = courses.find(item => item.id == courseId)
   // Verificar se foi encontrado o ID digitado
   if (course == undefined) {
-    console.log(`\nERRO: não existe um curso com o ID ${courseId}`)
+    console.warn(`\nERRO: não existe um curso com o ID ${courseId}`)
     againQuestion()
   } else {
     const newCourses = courses.filter(item => item.id != courseId)
@@ -179,6 +179,15 @@ function deleteCourse() {
     console.log(`\nCurso ID ${courseId} deletado!`)
 
     againQuestion()
+  }
+}
+
+/*================= listar todos os cursos =================*/
+function listCourses(data) {
+  if (data.length == 0){
+    console.log('Nenhum curso cadastrado no banco de dados')
+  } else {
+    console.log(data)
   }
 }
 
@@ -200,7 +209,7 @@ function app() {
   // Lógica após a escolha do usuário
   switch (userOption) {
     case '0':
-      console.table(courses)
+      listCourses(courses)
       againQuestion()
       break
     case '1':
@@ -216,7 +225,7 @@ function app() {
       deleteCourse()
       break
     default:
-      console.log('\nERRO: Opção inválida!')
+      console.error('\nERRO: Opção inválida!')
       app()
   }
 }
@@ -242,13 +251,13 @@ function writeJson() {
 
 /*================= executar novamente ? ===================*/
 function againQuestion() {
-  console.log('\nDeseja executar novamente?')
+  console.log('\nVoltar ao início?')
   const answer = readline.question("Digite 'S' ou 'N': ")
   if (answer.toLowerCase() === 's') {
     app()
   } else if (answer.toLowerCase() === 'n') {
     console.log('\nAté logo! :)')
-    console.log('\n============== FIM DA APLICAÇÃO ==============')
+    console.log('\n============ Aplicação finalizada ============\n')
     return
   } else {
     console.log('\nOpção inválida!')

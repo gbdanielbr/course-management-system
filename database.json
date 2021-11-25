@@ -1,38 +1,27 @@
 [
   {
     "id": 1,
-    "title": "test",
-    "description": "test",
-    "image": "test",
-    "teacher": "test",
+    "title": "Fundamentos de Economia e Finanças",
+    "description": "Base importante para quem está começando a entender o mercado financeiro",
+    "image": "https://media.istockphoto.com/photos/trading-charts-on-a-display-picture-id1317587887",
+    "teacher": "José Antônio Braga",
     "classesList": [
-      "test"
+      "https://www.google.com/"
     ],
     "createdAt": "2021-11-25T18:29:34.410Z",
     "updatedAt": null
   },
   {
     "id": 2,
-    "title": "test 2",
-    "description": "test",
-    "image": "test",
-    "teacher": "test",
-    "classesList": [],
+    "title": "Mercado Financeiro de A a Z",
+    "description": "Para entender a estrutura do sistema financeiro nacional",
+    "image": "https://media.istockphoto.com/photos/investment-business-report-picture-id1286971516",
+    "teacher": "Fernanda Macedo Pereira",
+    "classesList": [
+      "https://www.google.com/",
+      "https://www.google.com/"
+    ],
     "createdAt": "2021-11-25T17:57:20.511Z",
     "updatedAt": "2021-11-25T18:30:40.056Z"
-  },
-  {
-    "id": 3,
-    "title": "test 3",
-    "description": "test",
-    "image": "test",
-    "teacher": "test",
-    "classesList": [
-      "test",
-      "test",
-      "test"
-    ],
-    "createdAt": "2021-11-25T18:30:09.821Z",
-    "updatedAt": null
   }
 ]
