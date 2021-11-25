@@ -173,10 +173,24 @@ function deleteCourse() {
     console.warn(`\nERRO: não existe um curso com o ID ${courseId}`)
     againQuestion()
   } else {
-    const newCourses = courses.filter(item => item.id != courseId)
-    courses = newCourses
-    writeJson()
-    console.log(`\nCurso ID ${courseId} deletado!`)
+    console.log("\nCurso encontrado: ")
+    console.log(course)
+
+    // Usuário deve confirmar a exclusão do curso
+    let deleteAnswer = readline.question(`\nConfirma que deseja deletar o curso ID ${courseId}? S/N: `)
+    while ((deleteAnswer.toLowerCase() != "n") && (deleteAnswer.toLowerCase() != "s")){
+      console.log("\nResposta inválida!")
+      deleteAnswer = readline.question(`\nDeletar o curso ID ${courseId}? S/N: `)
+    }
+
+    if (deleteAnswer == "s") {
+      const newCourses = courses.filter(item => item.id != courseId)
+      courses = newCourses
+      writeJson()
+      console.log(`\nCurso ID ${courseId} deletado!`)
+    } else {
+      console.log("\nOk! Curso não deletado.")
+    }
 
     againQuestion()
   }
