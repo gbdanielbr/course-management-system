@@ -1,6 +1,5 @@
 const readline = require('readline-sync')
 const database = require('./database')
-
 let courses = database.courses
 
 /*===================== criar um curso =====================*/
@@ -13,7 +12,7 @@ function createCourse() {
     teacher: "",
     classesList: [],
     createdAt: null,
-    modifiedAt: null
+    updatedAt: null
   }
 
   // Criar ID do novo curso
@@ -30,7 +29,16 @@ function createCourse() {
   console.log("\nNome do professor: ")
   newCourse.teacher = readline.question()
 
-  const classQuantity = readline.question("\nQuantidade de aulas: ")
+  // Receber e verificar o tipo da quantidade de aulas inserida
+  let classQuantity = readline.question("\nQuantidade de aulas: ")
+  if (isNaN(classQuantity)){
+    while (isNaN(classQuantity)){
+      console.log("ERRO: a quantidade digitada precisa ser um número")
+      classQuantity = readline.question("\nQuantidade de aulas: ")
+    }
+  } 
+
+  // Receber e armazenar os links das aulas
   for (let i = 0; i < classQuantity; i++){
     console.log(`\nLink da aula ${i+1}: `)
     newCourse.classesList.push(readline.question())
@@ -41,7 +49,7 @@ function createCourse() {
 
   // Enviar o novo curso para o banco de dados
   courses.push(newCourse)
-  console.log(courses)
+  console.log("Curso cadastrado com sucesso!")
 
   againQuestion()
 }
@@ -150,28 +158,38 @@ function app() {
   const userOption = readline.question()
 
   // Lógica após a escolha do usuário
-  if (userOption == 0){
-    console.table(courses)
-    againQuestion()
-  } else if (userOption == 1){
-    createCourse()
-  } else if (userOption == 2){
-    showCourse()
-  } else if (userOption == 3){
-    updateCourse()
-  } else if (userOption == 4){
-    deleteCourse()
+  switch (userOption) {
+    case '0':
+      console.table(courses);
+      againQuestion();
+      break;
+    case '1':
+      createCourse();
+      break;
+    case '2':
+      showCourse();
+      break;
+    case '3':
+      updateCourse();
+      break;
+    case '4':
+      deleteCourse();
+      break;
+    default:
+      console.log("ERRO: Opção inválida!");
+      app();
   }
 }
 
 /*================= executar novamente ? ===================*/
 function againQuestion() {
   console.log("\nDeseja executar novamente?")
-  const answer = readline.question("Digite 'S' ou 'N'")
+  const answer = readline.question("Digite 'S' ou 'N': ")
   if (answer.toLowerCase() === "s"){
     app()
   } else if (answer.toLowerCase() === "n"){
     console.log('\nAté logo! :)')
+    console.log('============== FIM DA APLICAÇÃO ==============')
     return
   } else {
     console.log("\nOpção inválida")
