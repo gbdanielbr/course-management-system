@@ -208,9 +208,9 @@ function listCourses(data) {
 /*============= mini game quantidade de aulas ==============*/
 function classesQuantity() {
   console.log('\nQuantidade de aulas')
-  console.log('\n  <-[Z]  [X]->')
-  console.log(new Array(20).join('') + 'Escolher: [SPACE]\n')
-  const MAX = 15
+  console.log('\n   <-[Z]  [X]->')
+  console.log(new Array(20).join('') + ' Escolher: [SPACE]\n')
+  const MAX = 16
   const MIN = 0
   let value = 1
   let key
