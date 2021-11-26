@@ -23,5 +23,18 @@
     ],
     "createdAt": "2021-11-25T17:57:20.511Z",
     "updatedAt": "2021-11-25T18:30:40.056Z"
+  },
+  {
+    "id": 3,
+    "title": "test",
+    "description": "",
+    "image": "",
+    "teacher": "",
+    "classesList": [
+      "test",
+      "test"
+    ],
+    "createdAt": "2021-11-26T02:15:19.891Z",
+    "updatedAt": null
   }
 ]

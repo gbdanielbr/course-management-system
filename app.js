@@ -17,13 +17,12 @@ function createCourse() {
   }
 
   // Criar ID do novo curso (com lógica para verificar lacunas)
-
   if (courses[0].id != 1) {
     newCourse.id = 1
   } else {
     for (let i = 1; i < courses.length; i++) {
-      if (courses[i].id != (i+1)) {
-        newCourse.id = (i+1)
+      if (courses[i].id != i + 1) {
+        newCourse.id = i + 1
       } else {
         newCourse.id = courses.length + 1
       }
@@ -41,16 +40,10 @@ function createCourse() {
   console.log('\nNome do professor: ')
   newCourse.teacher = readline.question()
 
-  // Receber e verificar o tipo da quantidade de aulas inserida
-  let classQuantity = readline.question('\nQuantidade de aulas: ')
-  if (isNaN(classQuantity)) {
-    while (isNaN(classQuantity)) {
-      console.error('ERRO: a quantidade digitada precisa ser um número')
-      classQuantity = readline.question('\nQuantidade de aulas: ')
-    }
-  }
+  // Receber a quantidade de aulas
+  const classQuantity = classesQuantity()
 
-  // Receber e armazenar os links das aulas
+  // Armazenar os links das aulas
   for (let i = 0; i < classQuantity; i++) {
     console.log(`\nLink da aula ${i + 1}: `)
     newCourse.classesList.push(readline.question())
@@ -109,21 +102,26 @@ function updateCourse() {
     } else {
       // Armazenar dados de entrada para edição do curso
       console.log('\nDigite as seguintes informações:')
-      console.log('\nTítulo: ')
+      console.log(`\nTítulo: ${course.title}`)
       course.title = readline.question()
-      console.log('\nDescrição: ')
+      console.log(`\nDescrição: ${course.description}`)
       course.description = readline.question()
-      console.log('\nCaminho da imagem: ')
+      console.log(`\nCaminho da imagem: ${course.image}`)
       course.image = readline.question()
-      console.log('\nNome do professor: ')
+      console.log(`\nNome do professor: ${course.teacher}`)
       course.teacher = readline.question()
 
       // Usuário deseja atualizar os links das aulas?
       console.log(`\nLista de aulas do curso ID ${course.id}:`)
       console.table(course.classesList)
-      let updateClassQuestion = readline.question(`\nDeseja atualizar os links das aulas do curso "${course.title}"?\nDigite S ou N: `)
-      while ((updateClassQuestion.toLowerCase() != "n") && (updateClassQuestion.toLowerCase() != "s")){
-        console.log("Opção inválida!")
+      let updateClassQuestion = readline.question(
+        `\nDeseja atualizar os links das aulas do curso "${course.title}"?\nDigite S ou N: `
+      )
+      while (
+        updateClassQuestion.toLowerCase() != 'n' &&
+        updateClassQuestion.toLowerCase() != 's'
+      ) {
+        console.log('Opção inválida!')
         updateClassQuestion = readline.question(`Digite S ou N: `)
       }
       switch (updateClassQuestion.toLowerCase()) {
@@ -135,13 +133,8 @@ function updateCourse() {
             course.classesList.pop()
           }
           // Receber e verificar o tipo do input para quantidade de aulas
-          let classQuantity = readline.question('\nQuantidade de aulas: ')
-          if (isNaN(classQuantity)) {
-            while (isNaN(classQuantity)) {
-              console.error('\nERRO: a quantidade digitada precisa ser um número')
-              classQuantity = readline.question('Quantidade de aulas: ')
-            }
-          }
+          const classQuantity = classesQuantity()
+
           // Receber e armazenar os links das aulas
           for (let i = 0; i < classQuantity; i++) {
             console.log(`\nLink da aula ${i + 1}: `)
@@ -173,23 +166,30 @@ function deleteCourse() {
     console.warn(`\nERRO: não existe um curso com o ID ${courseId}`)
     againQuestion()
   } else {
-    console.log("\nCurso encontrado: ")
+    console.log('\nCurso encontrado: ')
     console.log(course)
 
     // Usuário deve confirmar a exclusão do curso
-    let deleteAnswer = readline.question(`\nConfirma que deseja deletar o curso ID ${courseId}? S/N: `)
-    while ((deleteAnswer.toLowerCase() != "n") && (deleteAnswer.toLowerCase() != "s")){
-      console.log("\nResposta inválida!")
-      deleteAnswer = readline.question(`\nDeletar o curso ID ${courseId}? S/N: `)
+    let deleteAnswer = readline.question(
+      `\nConfirma que deseja deletar o curso ID ${courseId}? S/N: `
+    )
+    while (
+      deleteAnswer.toLowerCase() != 'n' &&
+      deleteAnswer.toLowerCase() != 's'
+    ) {
+      console.log('\nResposta inválida!')
+      deleteAnswer = readline.question(
+        `\nDeletar o curso ID ${courseId}? S/N: `
+      )
     }
 
-    if (deleteAnswer == "s") {
+    if (deleteAnswer == 's') {
       const newCourses = courses.filter(item => item.id != courseId)
       courses = newCourses
       writeJson()
       console.log(`\nCurso ID ${courseId} deletado!`)
     } else {
-      console.log("\nOk! Curso não deletado.")
+      console.log('\nOk! Curso não deletado.')
     }
 
     againQuestion()
@@ -198,49 +198,84 @@ function deleteCourse() {
 
 /*================= listar todos os cursos =================*/
 function listCourses(data) {
-  if (data.length == 0){
+  if (data.length == 0) {
     console.log('Nenhum curso cadastrado no banco de dados')
   } else {
     console.log(data)
   }
 }
 
+/*============= mini game quantidade de aulas ==============*/
+function classesQuantity() {
+  console.log('\nQuantidade de aulas')
+  console.log('\n  <-[Z]  [X]->')
+  console.log(new Array(20).join('') + 'Escolher: [SPACE]\n')
+  const MAX = 15
+  const MIN = 0
+  let value = 1
+  let key
+  while (true) {
+    console.log(
+      '\x1B[1A\x1B[K|' +
+        new Array(value + 1).join('-') +
+        'O' +
+        new Array(MAX - value + 1).join('-') +
+        '| ' +
+        value
+    )
+    key = readline.keyIn('', { hideEchoBack: true, mask: '', limit: 'zx ' })
+    if (key === 'z') {
+      if (value > MIN) {
+        value--
+      }
+    } else if (key === 'x') {
+      if (value < MAX) {
+        value++
+      }
+    } else {
+      break
+    }
+  }
+  console.log(`\nQuantidade de aulas: ${value}`)
+
+  return value
+}
+
 /*================== executar a aplicação ==================*/
 function app() {
+  console.log('\nOpções:')
+
   const optionsList = [
-    ' 0 (zero) para listar todos os cursos         ',
-    ' 1 (um) para adicionar um novo curso          ',
-    ' 2 (dois) para exibir um curso                ',
-    ' 3 (tres) para atualizar os dados de um curso ',
-    ' 4 (quatro) para deletar um curso             '
+    ' Listar todos os cursos  ',
+    ' Adicionar um novo curso ',
+    ' Exibir um curso         ',
+    ' Atualizar um curso      ',
+    ' Deletar um curso        '
   ]
 
   // Input: usuário deve escolher uma opção
-  console.table(optionsList)
-  console.log('Digite o número da opção desejada: ')
-  const userOption = readline.question()
+  const userChoice = readline.keyInSelect(optionsList, 'Escolha: ')
 
   // Lógica após a escolha do usuário
-  switch (userOption) {
-    case '0':
+  switch (optionsList[userChoice]) {
+    case ' Listar todos os cursos  ':
       listCourses(courses)
       againQuestion()
       break
-    case '1':
+    case ' Adicionar um novo curso ':
       createCourse()
       break
-    case '2':
+    case ' Exibir um curso         ':
       showCourse()
       break
-    case '3':
+    case ' Atualizar um curso      ':
       updateCourse()
       break
-    case '4':
+    case ' Deletar um curso        ':
       deleteCourse()
       break
     default:
-      console.error('\nERRO: Opção inválida!')
-      app()
+      againQuestion()
   }
 }
 
