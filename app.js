@@ -210,9 +210,9 @@ function classesQuantity() {
   console.log('\nQuantidade de aulas')
   console.log('\n   <-[Z]  [X]->')
   console.log(new Array(20).join('') + ' Escolher: [SPACE]\n')
-  const MAX = 16
+  const MAX = 40
   const MIN = 0
-  let value = 1
+  let value = 20
   let key
   while (true) {
     console.log(
